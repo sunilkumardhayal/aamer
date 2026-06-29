@@ -66,3 +66,64 @@ if ("IntersectionObserver" in window) {
 } else {
   revealItems.forEach((item) => item.classList.add("is-visible"));
 }
+const floatingActions = document.querySelector("[data-floating-actions]");
+const contactModal = document.querySelector("[data-contact-modal]");
+const openContactModal = document.querySelector("[data-open-contact-modal]");
+const closeContactModal = document.querySelector("[data-close-contact-modal]");
+
+const setContactModalState = (isOpen) => {
+  if (!contactModal) return;
+  if (!isOpen) openContactModal?.focus();
+  contactModal.hidden = !isOpen;
+  contactModal.setAttribute("aria-hidden", String(!isOpen));
+  document.body.classList.toggle("modal-open", isOpen);
+  if (isOpen) closeContactModal?.focus();
+};
+
+openContactModal?.addEventListener("click", () => setContactModalState(true));
+closeContactModal?.addEventListener("click", () => setContactModalState(false));
+contactModal?.addEventListener("click", (event) => {
+  if (event.target === contactModal) setContactModalState(false);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && contactModal && !contactModal.hidden) setContactModalState(false);
+});
+
+const updateFloatingActions = () => {
+  floatingActions?.classList.toggle("is-visible", window.scrollY > 260);
+};
+updateFloatingActions();
+window.addEventListener("scroll", updateFloatingActions, { passive: true });
+
+const handleContactForm = async (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const submitButton = form.querySelector('button[type="submit"]');
+  const status = form.querySelector("[data-form-status]");
+  const originalLabel = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.textContent = "Sending...";
+  status.textContent = "";
+
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    });
+    if (!response.ok) throw new Error("Form submission failed");
+    form.reset();
+    status.textContent = "Thanks! Your message has been submitted successfully.";
+    if (form.id === "contact-form-modal") window.setTimeout(() => setContactModalState(false), 1600);
+  } catch {
+    status.textContent = "There was a problem sending your message. Please use email instead.";
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = originalLabel;
+  }
+};
+
+document.querySelectorAll("[data-contact-form]").forEach((form) => {
+  form.addEventListener("submit", handleContactForm);
+});
