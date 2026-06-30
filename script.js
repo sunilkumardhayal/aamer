@@ -14,6 +14,67 @@ const enhanceHeroMessage = () => {
   heroNote.innerHTML = "<strong>Research focus</strong><br>From sediment incipient motion to water-sensitive cities.";
 };
 
+const addResourceLinks = () => {
+  const resourceLinks = new Map([
+    ["Fluid Mechanics", "https://www.youtube.com/@nptelhrd/search?query=Fluid%20Mechanics"],
+    ["Groundwater Hydrology", "https://www.youtube.com/@nptelhrd/search?query=Groundwater%20Hydrology"],
+    ["Environmental Engineering I", "https://www.youtube.com/@nptelhrd/search?query=Environmental%20Engineering"],
+    ["Engineering Mechanics", "https://www.youtube.com/@nptelhrd/search?query=Engineering%20Mechanics"],
+    ["Cost and Estimation", "https://www.youtube.com/@nptelhrd/search?query=Construction%20Estimation%20and%20Costing"],
+    ["Engineering Drawing", "https://www.youtube.com/@nptelhrd/search?query=Engineering%20Drawing"],
+    ["SWMM", "https://www.epa.gov/water-research/storm-water-management-model-swmm"],
+    ["HEC-RAS 2D", "https://www.hec.usace.army.mil/software/hec-ras/"],
+    ["ANSYS Fluent", "https://www.ansys.com/products/fluids/ansys-fluent"],
+    ["MATLAB", "https://www.mathworks.com/products/matlab.html"],
+    ["Microsoft Excel", "https://www.microsoft.com/en-us/microsoft-365/excel"]
+  ]);
+
+  document.querySelectorAll(".skill-card li, .tag-list li").forEach((item) => {
+    if (item.querySelector("a")) return;
+
+    const label = item.textContent.trim();
+    const href = resourceLinks.get(label);
+    if (!href) return;
+
+    const link = document.createElement("a");
+    link.className = "resource-link";
+    link.href = href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = label;
+    link.title = label.includes("Mechanics") || label.includes("Hydrology") || label.includes("Engineering") || label.includes("Estimation")
+      ? `Explore ${label} learning resources on NPTEL`
+      : `Open the official ${label} resource`;
+
+    item.textContent = "";
+    item.appendChild(link);
+  });
+
+  const institutionLinks = new Map([
+    ["National Institute of Technology Srinagar", "https://nitsri.ac.in/"],
+    ["Indian Institute of Technology Gandhinagar", "https://iitgn.ac.in/"]
+  ]);
+
+  document.querySelectorAll(".timeline-place").forEach((element) => {
+    const label = element.textContent.trim();
+    const href = institutionLinks.get(label);
+    if (!href || element.querySelector("a")) return;
+
+    element.innerHTML = `<a class="institution-link" href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+  });
+
+  document.querySelectorAll(".education-card p, .about-copy p").forEach((element) => {
+    institutionLinks.forEach((href, label) => {
+      if (!element.innerHTML.includes(label) || element.querySelector(`a[href="${href}"]`)) return;
+
+      element.innerHTML = element.innerHTML.replace(
+        label,
+        `<a class="institution-link" href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`
+      );
+    });
+  });
+};
+
 const addContactSection = () => {
   const main = document.querySelector("main");
   if (!main || document.querySelector("#contact")) return;
@@ -127,6 +188,7 @@ const addFloatingActions = () => {
 
 loadEnhancementStyles();
 enhanceHeroMessage();
+addResourceLinks();
 addContactSection();
 addFloatingActions();
 
