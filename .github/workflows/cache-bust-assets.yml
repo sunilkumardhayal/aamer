@@ -1,5 +1,6 @@
 name: Bust website asset cache
 
+# One-time repair for browsers reusing stale CSS and JavaScript after a normal refresh.
 on:
   push:
     branches:
@@ -22,8 +23,9 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
-          version = "20260630-7"
+          version = "20260630-8"
 
           index_path = Path("index.html")
           html = index_path.read_text(encoding="utf-8")
@@ -39,15 +41,18 @@ jobs:
           base_styles = '  <link rel="stylesheet" href="styles.css">'
           versioned_styles = f'''  <link rel="stylesheet" href="styles.css?v={version}">
           <link rel="stylesheet" href="portfolio-upgrade.css?v={version}">'''
-          if 'portfolio-upgrade.css?' not in html:
+          if 'portfolio-upgrade.css' not in html:
               html = html.replace(base_styles, versioned_styles, 1)
           else:
-              import re
               html = re.sub(r'href="styles\.css(?:\?v=[^"]+)?"', f'href="styles.css?v={version}"', html, count=1)
               html = re.sub(r'href="portfolio-upgrade\.css(?:\?v=[^"]+)?"', f'href="portfolio-upgrade.css?v={version}"', html, count=1)
 
-          import re
-          html = re.sub(r'<script src="script\.js(?:\?v=[^"]+)?" defer></script>', f'<script src="script.js?v={version}" defer></script>', html, count=1)
+          html = re.sub(
+              r'<script src="script\.js(?:\?v=[^"]+)?" defer></script>',
+              f'<script src="script.js?v={version}" defer></script>',
+              html,
+              count=1,
+          )
           index_path.write_text(html, encoding="utf-8")
 
           script_path = Path("script.js")
@@ -57,10 +62,11 @@ jobs:
               'document.querySelector(\'link[href^="portfolio-upgrade.css"]\')',
               1,
           )
-          script = script.replace(
-              'stylesheet.href = "portfolio-upgrade.css";',
+          script = re.sub(
+              r'stylesheet\.href = "portfolio-upgrade\.css(?:\?v=[^"]+)?";',
               f'stylesheet.href = "portfolio-upgrade.css?v={version}";',
-              1,
+              script,
+              count=1,
           )
           script_path.write_text(script, encoding="utf-8")
           PY
