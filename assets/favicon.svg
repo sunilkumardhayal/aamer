@@ -1,11 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AMB">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Portrait of Dr. Aamer Majid Bhat">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#1b7777"/>
-      <stop offset="1" stop-color="#062d30"/>
+    <clipPath id="portrait-circle">
+      <circle cx="32" cy="32" r="29"/>
+    </clipPath>
+    <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#9bd8cf"/>
+      <stop offset="1" stop-color="#1b7777"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="18" fill="url(#g)"/>
-  <path d="M15 44 27 17h5l12 27h-7l-2.3-5.8H23.8L21.5 44Zm11-11.8h6.5l-3.2-8.3Z" fill="#fff"/>
-  <path d="M43 17h6v27h-6z" fill="#e2b76c"/>
+  <circle cx="32" cy="32" r="32" fill="#f6f1e7"/>
+  <image
+    href="https://sunilkumardhayal.github.io/aamer/assets/aamer-majid-bhat.webp"
+    x="3"
+    y="3"
+    width="58"
+    height="65"
+    preserveAspectRatio="xMidYMin slice"
+    clip-path="url(#portrait-circle)"
+  />
+  <circle cx="32" cy="32" r="29.5" fill="none" stroke="url(#frame)" stroke-width="3"/>
 </svg>
