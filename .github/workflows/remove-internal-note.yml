@@ -1,5 +1,6 @@
 name: Remove internal profile note
 
+# Retrigger one-time cleanup.
 on:
   push:
     branches:
