@@ -1,3 +1,40 @@
+const useWebPProfileImage = () => {
+  const profileImage = "assets/aamer-majid-bhat.webp";
+  const versionedProfileImage = `${profileImage}?v=20260630-2`;
+
+  document.querySelectorAll('link[rel~="icon"], link[rel="shortcut icon"]').forEach((link) => link.remove());
+
+  const favicon = document.createElement("link");
+  favicon.rel = "icon";
+  favicon.type = "image/webp";
+  favicon.href = versionedProfileImage;
+  document.head.appendChild(favicon);
+
+  const shortcutIcon = document.createElement("link");
+  shortcutIcon.rel = "shortcut icon";
+  shortcutIcon.type = "image/webp";
+  shortcutIcon.href = versionedProfileImage;
+  document.head.appendChild(shortcutIcon);
+
+  const appleIcon = document.createElement("link");
+  appleIcon.rel = "apple-touch-icon";
+  appleIcon.href = versionedProfileImage;
+  document.head.appendChild(appleIcon);
+
+  const portrait = document.querySelector('img[alt="Portrait of Dr. Aamer Majid Bhat"]');
+  if (portrait) {
+    portrait.src = profileImage;
+    portrait.removeAttribute("srcset");
+  }
+
+  const openGraphImage = document.querySelector('meta[property="og:image"]');
+  if (openGraphImage) {
+    openGraphImage.content = "https://sunilkumardhayal.github.io/aamer/assets/aamer-majid-bhat.webp";
+  }
+};
+
+useWebPProfileImage();
+
 const header = document.querySelector("[data-header]");
 const navToggle = document.querySelector("[data-nav-toggle]");
 const nav = document.querySelector("[data-nav]");
@@ -47,7 +84,8 @@ filterButtons.forEach((button) => {
   });
 });
 
-document.querySelector("[data-year]").textContent = new Date().getFullYear();
+const yearElement = document.querySelector("[data-year]");
+if (yearElement) yearElement.textContent = new Date().getFullYear();
 
 const revealItems = [...document.querySelectorAll(".reveal")];
 if ("IntersectionObserver" in window) {
