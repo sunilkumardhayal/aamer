@@ -1,0 +1,137 @@
+/* Permanent professional sections and verified research updates */
+
+.recent-updates-section {
+  background: linear-gradient(180deg, var(--paper), var(--cream));
+}
+
+.updates-grid {
+  display: grid;
+  margin-top: 3rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.update-card {
+  display: grid;
+  min-height: 220px;
+  padding: 1.45rem;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+  background: rgba(255, 253, 248, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  box-shadow: 0 14px 36px rgba(6, 45, 48, 0.07);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.update-card:hover {
+  border-color: rgba(27, 119, 119, 0.32);
+  box-shadow: 0 22px 52px rgba(6, 45, 48, 0.12);
+  transform: translateY(-3px);
+}
+
+.update-year {
+  display: grid;
+  width: 68px;
+  height: 68px;
+  place-items: center;
+  color: var(--white);
+  background: var(--deep);
+  border-radius: 50%;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+}
+
+.update-card h3 {
+  margin-bottom: 0.65rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.32rem;
+  font-weight: 500;
+}
+
+.update-card p {
+  margin-bottom: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.update-card a {
+  color: var(--deep);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-color: rgba(27, 119, 119, 0.35);
+  text-underline-offset: 0.28rem;
+}
+
+.verified-note {
+  max-width: 720px;
+  margin: 2rem 0 0;
+  padding: 0.9rem 1rem;
+  color: var(--ink-soft);
+  background: rgba(155, 216, 207, 0.16);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 0.7rem 0.7rem 0;
+  font-size: 0.76rem;
+}
+
+.profile-proof-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.2rem;
+}
+
+.profile-proof-strip a {
+  padding: 0.5rem 0.72rem;
+  color: var(--deep);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.profile-proof-strip a:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.no-script-notice {
+  margin: calc(var(--header-height) + 1rem) auto 0;
+  padding: 0.85rem 1rem;
+  color: var(--deep);
+  background: #fff3cd;
+  border: 1px solid #ead79c;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+}
+
+.publication-item mark {
+  padding: 0.05em 0.12em;
+  color: inherit;
+  background: rgba(226, 183, 108, 0.3);
+  border-radius: 0.18em;
+}
+
+@media (max-width: 760px) {
+  .updates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .update-card {
+    grid-template-columns: 1fr;
+  }
+
+  .update-year {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+@media print {
+  .recent-updates-section,
+  .profile-proof-strip {
+    break-inside: avoid;
+  }
+}
