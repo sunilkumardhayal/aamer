@@ -1,9 +1,9 @@
 const loadUpgradeStyles = () => {
-  if (document.querySelector('link[href="portfolio-upgrade.css"]')) return;
+  if (document.querySelector('link[href^="portfolio-upgrade.css"]')) return;
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "portfolio-upgrade.css";
+  stylesheet.href = "portfolio-upgrade.css?v=20260630-7";
   document.head.appendChild(stylesheet);
 };
 
