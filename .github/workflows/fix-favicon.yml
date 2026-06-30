@@ -1,5 +1,6 @@
 name: Fix portfolio favicon
 
+# One-time correction: replace the SVG tab icon with the WebP portrait.
 on:
   push:
     branches:
@@ -27,9 +28,9 @@ jobs:
           html = index_path.read_text(encoding="utf-8")
 
           old_favicon = '  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">'
-          new_favicon = '''  <link rel="icon" type="image/webp" sizes="any" href="assets/aamer-majid-bhat.webp?v=20260630-4">
-          <link rel="shortcut icon" type="image/webp" href="assets/aamer-majid-bhat.webp?v=20260630-4">
-          <link rel="apple-touch-icon" href="assets/aamer-majid-bhat.webp?v=20260630-4">'''
+          new_favicon = '''  <link rel="icon" type="image/webp" sizes="any" href="assets/aamer-majid-bhat.webp?v=20260630-5">
+          <link rel="shortcut icon" type="image/webp" href="assets/aamer-majid-bhat.webp?v=20260630-5">
+          <link rel="apple-touch-icon" href="assets/aamer-majid-bhat.webp?v=20260630-5">'''
 
           if old_favicon in html:
               html = html.replace(old_favicon, new_favicon, 1)
@@ -44,7 +45,7 @@ jobs:
           )
           html = html.replace(
               '<script src="script.js"></script>',
-              '<script src="script.js?v=20260630-4"></script>',
+              '<script src="script.js?v=20260630-5"></script>',
           )
 
           index_path.write_text(html, encoding="utf-8")
