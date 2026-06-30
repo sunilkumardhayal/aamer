@@ -3,7 +3,7 @@ const loadUpgradeStyles = () => {
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "portfolio-upgrade.css?v=20260630-7";
+  stylesheet.href = "portfolio-upgrade.css?v=20260630-8";
   document.head.appendChild(stylesheet);
 };
 
